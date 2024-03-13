@@ -1,0 +1,10 @@
+# ignore 
+bin/
+bin/Debug/
+
+# ignore 
+obj/
+
+.vscode/
+
+appsettings.Development.json
