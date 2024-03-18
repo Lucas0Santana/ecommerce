@@ -1,15 +1,13 @@
 using ecommerce.Data;
 using ecommerce.Repository.IRepository;
+using ecommerce.Repository.IRepository.IModelRepository;
+using ecommerce.Repository.Repository.ModelRepository;
 
 namespace ecommerce.Repository.Repository.ModelsRepository
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork(Context contexto) : IUnitOfWork
     {
-        public Context _context;
-        public UnitOfWork(Context contexto)
-        {
-            _context = contexto;
-        }
+        public Context _context = contexto;
 
         public async Task Commit()
         {
@@ -19,6 +17,12 @@ namespace ecommerce.Repository.Repository.ModelsRepository
         {
             _context.Dispose();
         }
+
+        private ClienteRepository? _clienteRepo;
+        public IClienteRepository ClienteRepository => _clienteRepo ??= new ClienteRepository(_context);
+        
+        private EnderecoRepository? _EnderecoRepo;
+        public IEnderecoRepository EnderecoRepository => _EnderecoRepo ??= new EnderecoRepository(_context);
 
     }
 }

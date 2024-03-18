@@ -5,11 +5,11 @@ namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AdministracaoController(IUnitOfWork contexto) : ControllerBase
+    public class CredenciaisController(IUnitOfWork contexto) : ControllerBase 
     {
         private readonly IUnitOfWork _IUOFW = contexto;
 
-        // [HttpPost]
-        // public async Task<IActionResult> Post(AdministracaoController)
+        
+        
     }
 }

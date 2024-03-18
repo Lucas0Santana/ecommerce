@@ -1,26 +1,43 @@
+using ecommerce.Models;
+using ecommerce.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
 {
-    [Route("[controller]")]
-    public class ClienteController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ClienteController(IUnitOfWork contexto) : ControllerBase
     {
-        private readonly ILogger<ClienteController> _logger;
+        private readonly IUnitOfWork _IUOFW = contexto;
 
-        public ClienteController(ILogger<ClienteController> logger)
-        {
-            _logger = logger;
+        [HttpPost]
+        public async Task<IActionResult> Post(Cliente cliente)
+        {   
+            _IUOFW.ClienteRepository.Adicionar(cliente);
+            await _IUOFW.Commit();
+            return Ok();
         }
 
-        public IActionResult Index()
-        {
-            return View();
+        [HttpGet("{cpf}")]
+        public async Task<IActionResult> Get(string cpf)
+        {            
+            Cliente? cliente = await _IUOFW.ClienteRepository.Pesquisar(x => x.CPF == cpf).FirstOrDefaultAsync();
+            if(cliente == null) { return NotFound("Cliente não encontrado"); }
+
+            return Ok(cliente);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPatch]
+        public async Task<IActionResult> Patch(Cliente cliente)
         {
-            return View("Error!");
+            Cliente? clienteExistente = await _IUOFW.ClienteRepository.Pesquisar(x => x.CPF == cliente.CPF).FirstOrDefaultAsync(); 
+            if(clienteExistente == null) { return NotFound("Cliente não encontrado"); }
+
+            return Ok("Nada alterado");
         }
+
+        
+
     }
 }
