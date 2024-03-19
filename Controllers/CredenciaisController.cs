@@ -1,26 +1,42 @@
-using ecommerce.Models;
-using ecommerce.Repository.IRepository;
+using ecommerce.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CredenciaisController(IUnitOfWork contexto) : ControllerBase 
+    public class CredenciaisController(ICredenciaisServices credenciaisServices) : ControllerBase 
     {
-        private readonly IUnitOfWork _IUOFW = contexto;
+        private readonly ICredenciaisServices _ICS = credenciaisServices;
         
         [HttpPost]
         public async Task<ActionResult<int>> Post(Credenciais credenciais)
         {
-            if(await _IUOFW.CredenciaisRepository.Existe(x => x.GetEmail() == credenciais.GetEmail()))
+            if(await _ICS.Criar(credenciais))
             {
-                return BadRequest($"O email {credenciais.GetEmail()} já está cadastrado");
+                return Ok(credenciais.Id);
             }
+            return BadRequest($"O email {credenciais.Email} já está cadastrado");
+        }
 
-            _IUOFW.CredenciaisRepository.Adicionar(credenciais);
-            await _IUOFW.Commit();
-            return Ok(credenciais.GetId());
+        [HttpPut]
+        public async Task<ActionResult<int>> Put(Credenciais credenciais)
+        {
+            if(await _ICS.Atualizar(credenciais))
+            {
+                return Ok(credenciais.Id);
+            }
+            return BadRequest($"Erro ao atualizar credenciais");
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<string>> Patch(int id)
+        {
+            if(await _ICS.AlternarStatus(id))
+            {
+                return Ok($"Status da credencial {id} alterado");
+            }
+            return BadRequest($"Status da credencial {id} não alterado");
         } 
         
         

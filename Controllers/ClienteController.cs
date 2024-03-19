@@ -1,6 +1,7 @@
 using System.Reflection.Metadata.Ecma335;
 using ecommerce.Models;
 using ecommerce.Repository.IRepository;
+using ecommerce.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,51 +9,40 @@ namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClienteController(IUnitOfWork contexto) : ControllerBase
+    public class ClienteController(IClienteServices clienteServices) : ControllerBase
     {
-        private readonly IUnitOfWork _IUOFW = contexto;
+        private readonly IClienteServices _ICLS = clienteServices;
 
         [HttpPost]
         public async Task<IActionResult> Post(Cliente cliente)
         {   
-            try
+            if(await _ICLS.Criar(cliente))
             {
-                _IUOFW.ClienteRepository.Adicionar(cliente);
-                await _IUOFW.Commit();                
+                return Ok("Cliente cadastrado com sucesso");
             }
-            catch (Exception)
-            {
-                return BadRequest($"CPF {cliente.CPF} já cadastrado");
-            }
-
-            return Ok("Cliente cadastrado com sucesso");
+            return BadRequest($"CPF {cliente.CPF} já cadastrado");
         }
 
         [HttpGet("{cpf}")]
         public async Task<IActionResult> Get(string cpf)
         {            
-            Cliente? cliente = await _IUOFW.ClienteRepository.Pesquisar(x => x.CPF == cpf).FirstOrDefaultAsync();
-            if(cliente == null) { return NotFound("Cliente não encontrado"); }
-
-            return Ok(cliente);
+            Cliente? cliente = await _ICLS.Pesquisar(cpf);
+            if(cliente != null)
+            {
+                return Ok(cliente);
+            }
+            return NotFound("Cliente não encontrado");
         }
-
-    [HttpGet]
-    public int GetTeste()
-    {
-        return 1;
-    }
 
         [HttpPatch]
-        public async Task<IActionResult> Patch(Cliente cliente)
+        public async Task<IActionResult> Patch(string cpf)
         {
-            Cliente? clienteExistente = await _IUOFW.ClienteRepository.Pesquisar(x => x.CPF == cliente.CPF).FirstOrDefaultAsync(); 
-            if(clienteExistente == null) { return NotFound("Cliente não encontrado"); }
-
-            return Ok("Nada alterado");
+            if(await _ICLS.AlternarStatus(cpf))
+            {
+                return Ok("Status do cliente alterado");
+            }
+            return NotFound("Usuário não encontrado");
         }
-
-        
 
     }
 }

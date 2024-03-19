@@ -2,6 +2,9 @@ using System.Reflection;
 using ecommerce.Data;
 using ecommerce.Repository.IRepository;
 using ecommerce.Repository.Repository.ModelsRepository;
+using ecommerce.Services;
+using ecommerce.Services.IServices;
+using ecommerce.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Any;
@@ -86,6 +89,9 @@ builder.Services.AddDbContext<Context>(options =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICredenciaisServices, CredenciaisServices>();
+builder.Services.AddScoped<IClienteServices, ClienteServices>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
