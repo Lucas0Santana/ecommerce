@@ -2,18 +2,16 @@ using System.Collections.Generic;
 
 namespace ecommerce.Models
 {
-    public class Cliente(string cpf)
+    public class Cliente(string cpf, int idCrediciais)
     {
         private readonly string _cpf = cpf;
 
-        public string CPF 
-        { 
-            get { return _cpf; }
-        }
+        public string CPF => _cpf;
 
-        public int IdCredicias { get; set; }
+        private readonly int _idCrediciais = idCrediciais;
+        public int IdCredicias => _idCrediciais;
 
-        public Credenciais Credenciais { get; set; }
+        public Credenciais? Credenciais { get; set; }
         public ICollection<Endereco> Enderecos { get; set; } = [];
         public ICollection<Pedido>? Pedidos { get; set; }
         public Carrinho? Carrinho { get; set; }
