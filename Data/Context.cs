@@ -8,5 +8,7 @@ namespace ecommerce.Data
         public Context(DbContextOptions options) : base(options)
         {
         }
+
+        
     }
 }

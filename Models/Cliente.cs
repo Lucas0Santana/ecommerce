@@ -11,7 +11,9 @@ namespace ecommerce.Models
             get { return _cpf; }
         }
 
-        public Credenciais Credenciais { get; set; } = new();
+        public int IdCredicias { get; set; }
+
+        public Credenciais Credenciais { get; set; }
         public ICollection<Endereco> Enderecos { get; set; } = [];
         public ICollection<Pedido>? Pedidos { get; set; }
         public Carrinho? Carrinho { get; set; }

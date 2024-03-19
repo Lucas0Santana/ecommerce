@@ -23,6 +23,8 @@ namespace ecommerce.Repository.Repository.ModelsRepository
         
         private EnderecoRepository? _EnderecoRepo;
         public IEnderecoRepository EnderecoRepository => _EnderecoRepo ??= new EnderecoRepository(_context);
+        private CredenciaisRepository? _CredenciaisRepo;
+        public ICredenciaisRepository CredenciaisRepository => _CredenciaisRepo ??= new CredenciaisRepository(_context);
 
     }
 }

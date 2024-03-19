@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using ecommerce.Models;
 using ecommerce.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,17 @@ namespace ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Cliente cliente)
         {   
-            _IUOFW.ClienteRepository.Adicionar(cliente);
-            await _IUOFW.Commit();
-            return Ok();
+            try
+            {
+                _IUOFW.ClienteRepository.Adicionar(cliente);
+                await _IUOFW.Commit();                
+            }
+            catch (Exception)
+            {
+                return BadRequest($"CPF {cliente.CPF} já cadastrado");
+            }
+
+            return Ok("Cliente cadastrado com sucesso");
         }
 
         [HttpGet("{cpf}")]
@@ -27,6 +36,12 @@ namespace ecommerce.Controllers
 
             return Ok(cliente);
         }
+
+    [HttpGet]
+    public int GetTeste()
+    {
+        return 1;
+    }
 
         [HttpPatch]
         public async Task<IActionResult> Patch(Cliente cliente)

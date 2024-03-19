@@ -4,11 +4,30 @@ namespace ecommerce.Models
 {
     public class Credenciais
     {
-        private int Id { get; set; }
-        private string Nome { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
         [EmailAddress]
-        private string Email { get; set; }
-        private string Senha { get; set; }
-        private bool Status { get; set; }        
+        public string Email { get; set; }
+        public string Senha { get; set; }
+        public bool Status { get; set; }        
+    
+        public Credenciais(int id, string nome, string email, string senha, bool status) 
+        {
+            this.Id = id;
+            this.Nome = nome;
+            this.Email = email;
+            this.Senha = senha;
+            this.Status = status;
+   
+        }
+
+        public int GetId()
+        {
+            return Id;
+        }
+        public string GetEmail()
+        {
+            return Email;
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace ecommerce.Repository.IRepository
 
         IClienteRepository ClienteRepository { get; }
         IEnderecoRepository EnderecoRepository { get; }
+        ICredenciaisRepository CredenciaisRepository { get; }
     }
 }
