@@ -1,8 +1,11 @@
 namespace ecommerce.Models
 {
-    public class Transacao
+    public class Transacao(int id, double valor)
     {
-        private int Id { get; set; }
-        private double Valor { get; set; }
+        private readonly int _id = id;
+        public int Id => _id;
+
+        private readonly double _valor = valor;
+        public double Valor => _valor;
     }
 }

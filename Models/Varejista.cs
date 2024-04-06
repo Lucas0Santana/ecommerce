@@ -1,10 +1,10 @@
 namespace ecommerce.Models
 {
-    public class Varejista
+    public class Varejista(string cnpj, int idEndereco, int idCredenciais)
     {
-        private readonly string _cnpj;
-        private readonly int _idEndereco; 
-        private readonly int _idCredenciais;
+        private readonly string _cnpj = cnpj;
+        private readonly int _idEndereco = idEndereco; 
+        private readonly int _idCredenciais = idCredenciais;
 
 
         public string CNPJ => _cnpj; 
@@ -13,13 +13,5 @@ namespace ecommerce.Models
 
         public Credenciais? Credenciais { get; set; }
         public Endereco? Endereco { get; set; }
-
-        public Varejista(string cnpj, int idEndereco, int idCredenciais)
-        {
-            _cnpj = cnpj;
-            _idEndereco = idEndereco;
-            _idCredenciais = idCredenciais;
-        }
-        
     }
 }

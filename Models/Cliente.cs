@@ -2,14 +2,14 @@ using System.Collections.Generic;
 
 namespace ecommerce.Models
 {
-    public class Cliente(string cpf, int idCrediciais)
+    public class Cliente(string cpf, int idCredenciais)
     {
         private readonly string _cpf = cpf;
 
         public string CPF => _cpf;
 
-        private readonly int _idCrediciais = idCrediciais;
-        public int IdCredicias => _idCrediciais;
+        private readonly int _idCredenciais = idCredenciais;
+        public int IdCredenciais => _idCredenciais;
 
         public Credenciais? Credenciais { get; set; }
         public ICollection<Endereco> Enderecos { get; set; } = [];

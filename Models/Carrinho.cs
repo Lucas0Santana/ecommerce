@@ -1,7 +1,10 @@
 namespace ecommerce.Models
 {
-    public class Carrinho
+    public class Carrinho(string id)
     {
-        private int Id { get; set; }
+        private readonly string _id = id;
+        public string Id => _id;
+
+        
     }
 }

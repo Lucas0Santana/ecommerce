@@ -1,14 +1,14 @@
 namespace ecommerce.Models
 {
-    public class Pedido
+    public class Pedido(int id, double valor, DateOnly data, double frete, char status, string cnpj, string cpf, int idTransacao)
     {
-        private readonly int _id;
-        private readonly double _valor;   
-        private readonly DateOnly _data;
-        private readonly double _frete;
-        private readonly char _status;
-        private readonly string _cnpj;
-        private readonly string _cpf;
+        private readonly int _id = id;
+        private readonly double _valor = valor;   
+        private readonly DateOnly _data = data;
+        private readonly double _frete = frete;
+        private readonly char _status = status;
+        private readonly string _cnpj = cnpj;
+        private readonly string _cpf = cpf;
         private readonly int _idTransacao;
 
 
@@ -25,15 +25,5 @@ namespace ecommerce.Models
         public Cliente? Cliente { get; set; }
         public Varejista? Varejista { get; set; }
         public Transacao? Transacao { get; set; }
-        
-        public Pedido(int id, double valor, DateOnly data, double frete, char status)
-        {
-            _id = id;
-            _valor = valor;
-            _data = data;
-            _frete = frete;
-            _status = status;
-        }
-
     }
 }
