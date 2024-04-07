@@ -1,18 +1,12 @@
 namespace ecommerce.Models
 {
-    public class Estorno(int id, double valor, string cpfDestinatario, int idSolicitacaoDeEstorno)
+    public class Estorno(int id, double valor, string cPFDestinatario, int idSolicitacaoDeEstorno)
     {   
-        private readonly int _id = id;
-        public int Id => _id;
-
-        private readonly double _valor = valor;
-        public double Valor => _valor;
-
-        private readonly string _cpfDestinatario = cpfDestinatario;
-        public string CPFDestinatario => _cpfDestinatario;
-
-        private readonly int _idSolicitacaoDeEstorno = idSolicitacaoDeEstorno;
-        public int IdSolicitacaoDeEstorno => _idSolicitacaoDeEstorno;
+        public int Id { get; private set; } = id;
+        public double Valor { get; private set; } = valor;
+        public string CPFDestinatario { get; private set; } = cPFDestinatario;
+        public int IdSolicitacaoDeEstorno { get; private set; } = idSolicitacaoDeEstorno;
+        
         public SolicitacaoDeEstorno? SolicitacaoDeEstorno { get; set;}
     }
 }

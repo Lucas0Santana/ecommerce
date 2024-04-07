@@ -1,24 +1,11 @@
 namespace ecommerce.Models
 {
-    public class Item
+    public class Item(int id, int qtde, int idProduto)
     {
-        private readonly int _id;
-        public int Id => _id;
-        
-        private readonly int _qtde;
-        public int Qtde => _qtde;
+        public int Id { get; private set; } = id;
+        public int Qtde { get; private set; } = qtde;
+        public int IdProduto { get; private set; } = idProduto;
 
-        private readonly int _idProduto;
-        public int IdProduto => _idProduto;
-        private readonly Produto? Produto;
-
-        public Item(int id, int qtde, int idProduto, Produto produto)
-        {
-            _id = id;
-            _qtde = qtde;
-            _idProduto = idProduto;
-            Produto = produto;
-        }        
-
+        public Produto Produto { get; set;}
     }
 }
