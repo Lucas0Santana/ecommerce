@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ClienteController(IClienteServices clienteServices) : ControllerBase
     {
         private readonly IClienteServices _ICLS = clienteServices;

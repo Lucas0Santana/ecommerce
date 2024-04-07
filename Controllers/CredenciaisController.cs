@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class CredenciaisController(ICredenciaisServices credenciaisServices) : ControllerBase 
     {
         private readonly ICredenciaisServices _ICS = credenciaisServices;

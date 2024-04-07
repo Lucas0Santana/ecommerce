@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class VarejistaController(IVarejistaServices varejistaServices) : ControllerBase
     {
         private readonly IVarejistaServices _IVS = varejistaServices;
