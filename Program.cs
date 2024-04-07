@@ -1,13 +1,16 @@
-using System.Reflection;
+using System.Text;
+using ecommerce;
 using ecommerce.Data;
 using ecommerce.Repository.IRepository;
 using ecommerce.Repository.Repository.ModelsRepository;
 using ecommerce.Services;
 using ecommerce.Services.IServices;
 using ecommerce.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
@@ -24,27 +27,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
     {
-        // c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-        // {
-        //     Name = "Authorization",
-        //     Type = SecuritySchemeType.ApiKey,
-        //     Scheme = "Bearer",
-        //     BearerFormat = "JWT",
-        //     In = ParameterLocation.Header,
-        //     Description = "Header de autorização JWT usando esquema Bearer. \r\n\r\n Informe 'Bearer' [espaço] e o seu token. \r\n\r\n Exemplo \'Bearer 12345678 \'",
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description = "Header de autorização JWT usando esquema Bearer. \r\n\r\n Informe 'Bearer' [espaço] e o seu token. \r\n\r\n Exemplo \'Bearer 12345678 \'",
 
-        // });
+        });
 
-        // c.AddSecurityRequirement(new OpenApiSecurityRequirement{
-        // {
-        //     new OpenApiSecurityScheme{
-        //         Reference = new OpenApiReference{
-        //             Type = ReferenceType.SecurityScheme,
-        //             Id = "Bearer"
-        //         }
-        //     },
-        //     new string[] {}
-        // }});
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+        {
+            new OpenApiSecurityScheme{
+                Reference = new OpenApiReference{
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }});
 
         c.MapType<DateOnly>(() => new OpenApiSchema
         {
@@ -63,25 +66,27 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<Context>()
                         .AddDefaultTokenProviders();
 
-// builder.Services.AddAuthentication(x =>
-// {
-//     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-// })
-//     .AddJwtBearer(x =>
-//     {
-//         x.RequireHttpsMetadata = false;
-//         x.SaveToken = true;
-//         x.TokenValidationParameters = new TokenValidationParameters
-//         {
+var key = Encoding.ASCII.GetBytes(Configuracoes.Secret);
 
-//             ValidateIssuerSigningKey = true,
-//             IssuerSigningKey = new SymmetricSecurityKey(key),
-//             ValidateIssuer = false,
-//             ValidateAudience = false
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
 
-//         };
-//     });
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+
+        };
+    });
 
 // DbContext
 builder.Services.AddDbContext<Context>(options =>
@@ -96,6 +101,7 @@ builder.Services.AddScoped<IEnderecoServices, EnderecoServices>();
 builder.Services.AddScoped<IAdministradorServices, AdministradorServices>();
 builder.Services.AddScoped<IProdutoServices, ProdutoServices>();
 builder.Services.AddScoped<IVarejistaServices, VarejistaServices>();
+builder.Services.AddScoped<ILoginServices, LoginServices>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -120,6 +126,10 @@ app.UseCors(c =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
