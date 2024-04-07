@@ -95,6 +95,7 @@ builder.Services.AddScoped<IClienteServices, ClienteServices>();
 builder.Services.AddScoped<IEnderecoServices, EnderecoServices>();
 builder.Services.AddScoped<IAdministradorServices, AdministradorServices>();
 builder.Services.AddScoped<IProdutoServices, ProdutoServices>();
+builder.Services.AddScoped<IVarejistaServices, VarejistaServices>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
