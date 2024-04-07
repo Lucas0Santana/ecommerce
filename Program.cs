@@ -7,6 +7,7 @@ using ecommerce.Services.IServices;
 using ecommerce.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
@@ -120,5 +121,11 @@ app.UseCors(c =>
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(@"C:/UFS/ecommerce/Images/"),
+    RequestPath = "/images"
+});
 
 await app.RunAsync();
