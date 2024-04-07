@@ -1,12 +1,13 @@
 using ecommerce.Models;
-using ecommerce.Repository.IRepository;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class AdministradorController(IAdministradorServices administradorServices) : ControllerBase
     {
         private readonly IAdministradorServices _IADMS = administradorServices;

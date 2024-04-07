@@ -1,14 +1,17 @@
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class CredenciaisController(ICredenciaisServices credenciaisServices) : ControllerBase 
     {
         private readonly ICredenciaisServices _ICS = credenciaisServices;
         
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<int>> Post(Credenciais credenciais)
         {

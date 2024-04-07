@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ecommerce.Models;
 using ecommerce.Services.IServices;
-using ecommerce.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class ProdutoController(IProdutoServices produtoServices) : ControllerBase
     {
         private readonly IProdutoServices _IPS = produtoServices;
@@ -62,6 +60,7 @@ namespace ecommerce.Controllers
             return BadRequest();
         }
 
+        [AllowAnonymous]
         [HttpGet("ListagemAleatoria")]
         public async Task<ActionResult<List<Produto>>> Get()
         {

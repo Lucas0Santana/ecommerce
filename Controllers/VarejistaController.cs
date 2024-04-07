@@ -4,16 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using ecommerce.Models;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class VarejistaController(IVarejistaServices varejistaServices) : ControllerBase
     {
         private readonly IVarejistaServices _IVS = varejistaServices;
     
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Criar(Varejista varejista)
         {

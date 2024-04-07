@@ -1,11 +1,13 @@
 using ecommerce.Models;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ItemController(IItemServices itemServices) : ControllerBase
     {
         private readonly IItemServices _itemServices = itemServices;

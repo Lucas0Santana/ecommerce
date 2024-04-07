@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ecommerce.Models;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class PedidoController(IPedidoServices pedidoServices) : ControllerBase
     {
         private readonly IPedidoServices _IPDS = pedidoServices;

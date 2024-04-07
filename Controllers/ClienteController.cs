@@ -1,18 +1,17 @@
-using System.Reflection.Metadata.Ecma335;
-using ecommerce.Models;
-using ecommerce.Repository.IRepository;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ClienteController(IClienteServices clienteServices) : ControllerBase
     {
         private readonly IClienteServices _ICLS = clienteServices;
-
+        
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Post(Cliente cliente)
         {   

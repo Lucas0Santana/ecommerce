@@ -1,13 +1,13 @@
 using ecommerce.Models;
-using ecommerce.Repository.IRepository;
 using ecommerce.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class EnderecoController(IEnderecoServices serviceEndereco) : ControllerBase
     {
         private readonly IEnderecoServices _ISE = serviceEndereco;
