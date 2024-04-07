@@ -108,7 +108,8 @@ namespace ecommerce.Data
             produto.Property(p => p.Nome).IsRequired().HasMaxLength(100).HasColumnName("nome");
             produto.Property(p => p.Descricao).HasMaxLength(500).HasColumnName("descricao");
             produto.Property(p => p.Preco).IsRequired().HasColumnName("preco");
-            produto.Property(p => p.Cnpj).IsRequired().HasColumnName("cnpj");
+            produto.Property(p => p.CNPJ).IsRequired().HasColumnName("cnpj");
+            produto.Property(p => p.Status).IsRequired().HasColumnName("status");
 
             var solicitacaoDeEstorno = modelBuilder.Entity<SolicitacaoDeEstorno>();
             solicitacaoDeEstorno.ToTable("SolicitacaoDeEstorno");
