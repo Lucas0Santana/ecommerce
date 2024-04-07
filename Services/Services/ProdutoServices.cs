@@ -40,12 +40,35 @@ namespace ecommerce.Services.Services
 
         public async Task<List<Produto>> Listar(string cnpj)
         {
-            return await _IUOFW.ProdutoRepository.Pesquisar(x => x.Cnpj == cnpj).ToListAsync();
+            return await _IUOFW.ProdutoRepository.Pesquisar(x => x.CNPJ == cnpj).ToListAsync();
         }
 
         public async Task<Produto?> Pesquisar(int id)
         {
             return await _IUOFW.ProdutoRepository.Pesquisar(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Produto>> ListagemAleatoria()
+        {
+            List<int> ids = await _IUOFW.ProdutoRepository.Pesquisar(x => x.Id != 0).Select(x => x.Id).ToListAsync();
+
+            Random randNum = new();
+            List<Produto> produtos = [];
+                
+            int qtdeProdutos = 12;
+        
+             for(int i = 0; i < qtdeProdutos; i++)
+             {
+                if(ids.Count != 0)
+                {
+                    int numAleatorio = randNum.Next(0, ids.Count);
+                    produtos.Add(await _IUOFW.ProdutoRepository.Pesquisar(x => x.Id == ids[numAleatorio]).FirstAsync());
+                    ids.RemoveAt(numAleatorio); 
+                }
+             }
+
+            
+            return produtos.OrderBy(x => x.Nome).ToList();
         }
     }
 }

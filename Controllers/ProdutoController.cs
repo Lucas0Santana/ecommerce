@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ecommerce.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ProdutoController(IProdutoServices produtoServices) : ControllerBase
     {
         private readonly IProdutoServices _IPS = produtoServices;
@@ -62,6 +62,16 @@ namespace ecommerce.Controllers
             return BadRequest();
         }
 
+        [HttpGet("ListagemAleatoria")]
+        public async Task<ActionResult<List<Produto>>> Get()
+        {
+            var produtos = await _IPS.ListagemAleatoria();
+            if (produtos.Count > 0)
+            {
+                return Ok(produtos);
+            }
 
+            return NotFound("Nenhum produto encontrado");
+        }
     }
 }
