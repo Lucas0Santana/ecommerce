@@ -74,6 +74,7 @@ namespace ecommerce.Data
             endereco.Property(e => e.Bairro).IsRequired().HasMaxLength(100).HasColumnName("bairro");
             endereco.Property(e => e.Cidade).IsRequired().HasMaxLength(100).HasColumnName("cidade");
             endereco.Property(e => e.Estado).IsRequired().HasMaxLength(2).HasColumnName("estado");
+            
 
             var estorno = modelBuilder.Entity<Estorno>();
             estorno.ToTable("Estorno");
@@ -100,6 +101,7 @@ namespace ecommerce.Data
             pedido.Property(p => p.CNPJ).IsRequired().HasColumnName("cnpj");
             pedido.Property(p => p.CPF).IsRequired().HasColumnName("cpf");
             pedido.Property(p => p.IdTransacao).IsRequired().HasColumnName("idTransacao");
+            pedido.Property(p => p.IdEndereco).IsRequired().HasColumnName("idEndereco");
             
             var produto = modelBuilder.Entity<Produto>();
             produto.ToTable("Produto");

@@ -1,6 +1,6 @@
 namespace ecommerce.Models
 {
-    public class Pedido(int id, double valor, DateOnly data, double frete, char status, string CNPJ, string CPF, int idTransacao)
+    public class Pedido(int id, double valor, DateOnly data, double frete, char status, string CNPJ, string CPF, int idTransacao, int idEndereco)
     {
 
         public int Id {get; private set;} = id;
@@ -11,10 +11,12 @@ namespace ecommerce.Models
         public string CNPJ {get; private set;} = CNPJ;
         public string CPF {get; private set;} = CPF;
         public int IdTransacao {get; private set;} = idTransacao;
+        public int IdEndereco { get; set; } = idEndereco;
 
 
         public Cliente? Cliente { get; set; }
         public Varejista? Varejista { get; set; }
         public Transacao? Transacao { get; set; }
+        public Endereco? Endereco { get; set; }
     }
 }
