@@ -70,5 +70,10 @@ namespace ecommerce.Services.Services
             
             return produtos.OrderBy(x => x.Nome).ToList();
         }
+
+        public async Task<List<Produto>> ListarPorNome(string nome)
+        {
+            return await _IUOFW.ProdutoRepository.Pesquisar(x => x.Nome.Contains(nome)).ToListAsync();
+        }
     }
 }

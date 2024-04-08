@@ -49,6 +49,18 @@ namespace ecommerce.Controllers
             return NotFound("Nenhum produto encontrado");
         }
 
+        [HttpGet("nome/{nome}")]
+        public async Task<ActionResult<List<Produto>>> ListagemPorNome(string nome)
+        {
+            var produtos = await _IPS.Listar(nome);
+            if (produtos.Count > 0)
+            {
+                return Ok(produtos);
+            }
+
+            return NotFound("Nenhum produto encontrado");
+        }
+
         [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(int id)
         {

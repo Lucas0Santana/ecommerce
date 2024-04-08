@@ -13,6 +13,7 @@ namespace ecommerce.Services.IServices
         Task<Produto?> Pesquisar(int id);
         Task<bool> Desativar(int id);
         Task<List<Produto>> Listar(string cnpj);
+        Task<List<Produto>> ListarPorNome(string nome);
         Task<List<Produto>> ListagemAleatoria();
         
     }
